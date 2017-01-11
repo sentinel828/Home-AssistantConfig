@@ -1,0 +1,54 @@
+  - platform: wunderground
+    api_key: !secret wunderground_password
+    monitored_conditions:
+      - alerts
+      - relative_humidity
+      - temp_f
+      - weather
+      - feelslike_f
+      - precip_1hr_in
+      - precip_today_in
+      - visibility_mi
+      - wind_dir
+      - wind_mph
+
+  - platform: darksky
+    api_key: !secret darksky_password
+    monitored_conditions:
+      - summary
+      - icon
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - temperature
+      - wind_speed
+      - cloud_cover
+      - humidity
+      - visibility
+      - minutely_summary
+      - hourly_summary
+      - daily_summary
+      - temperature_max
+      - temperature_min
+
+  - platform: template
+    sensors:
+      family_calendar_message:
+        friendly_name: "Next Event"
+        value_template: '{{ states.calendar.family_calendar.attributes.message }}'
+      family_calendar_location:
+        friendly_name: "Location"
+        value_template: '{{ states.calendar.family_calendar.attributes.location }}'
+      family_calendar_start_time:
+        friendly_name: "Start Time"
+        value_template: '{{ states.calendar.family_calendar.attributes.start_time }}'
+      holiday_message:
+        friendly_name: "Next Holiday"
+        value_template: '{{ states.calendar.holidays_in_united_states.attributes.message }}'
+
+  - platform: speedtest
+    server_id: 4265
+    monitored_conditions:
+      - ping
+      - download
+      - upload
